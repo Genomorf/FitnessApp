@@ -80,7 +80,7 @@ QList<int> SQLite::getWeightFromSql()
 
     while(query.next()){
         int value = query.value(1).toInt();
-        table.append(value);
+        table.push_back(value);
     }
     return table;
 }

@@ -15,14 +15,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        Statistics.cpp \
         calendar.cpp \
         chart.cpp \
         darkpalette.cpp \
         main.cpp \
         mainwindow.cpp \
         profiler.cpp \
-        sqlite.cpp
+        sqlite.cpp \
+        statistics.cpp \
+        unittests.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -33,13 +34,14 @@ FORMS += \
     mainwindow.ui
 
 HEADERS += \
-    Statistics.h \
     calendar.h \
     chart.h \
     darkpalette.h \
     mainwindow.h \
     profiler.h \
-    sqlite.h
+    sqlite.h \
+    statistics.h \
+    unittests.h
 
 RC_FILE = icon.rc
 

@@ -3,7 +3,6 @@
 #include <QDebug>
 #include "profiler.h"
 
-
 int meanStat(QList<int> list)
 {
     auto profiler = Profiler();
@@ -11,7 +10,7 @@ int meanStat(QList<int> list)
 
     int sum = std::accumulate(list.begin() , list.end(), 0);
     int mean = sum / list.count();
-    qDebug() << QString("Mean: %1").arg(mean);
+   // qDebug() << QString("Mean: %1").arg(mean);
 
     profiler.finishMeasuring();
     return mean; 
@@ -19,6 +18,8 @@ int meanStat(QList<int> list)
 
 int standartDeviation(QList<int> list, int mean)
 {
+    if (list.length() <= 1) return 0;
+
     auto profiler = Profiler();
     profiler.startMeasuring("SD: ");
 
@@ -28,7 +29,7 @@ int standartDeviation(QList<int> list, int mean)
     }
     int SD = sqrt(std::accumulate(tempList.begin(), tempList.end(), 0))
             / tempList.count() - 1;
-    qDebug() << QString("SD: %1 ").arg(SD);
+   // qDebug() << QString("SD: %1 ").arg(SD);
 
     profiler.finishMeasuring();
     return SD;
@@ -36,12 +37,14 @@ int standartDeviation(QList<int> list, int mean)
 
 int dynamicStat(QList<int> list)
 {
+    if (list.length() <= 1) return 0;
+
     auto profiler = Profiler();
     profiler.startMeasuring("Dynamic: ");
 
     int sum = std::accumulate(list.begin(), list.end() - 1, 0);
     int dynamic = list.last() - (sum / (list.count() - 1));
-    qDebug() << QString("Dynamic: %1").arg(dynamic);
+   // qDebug() << QString("Dynamic: %1").arg(dynamic);
 
     profiler.finishMeasuring();
     return dynamic;

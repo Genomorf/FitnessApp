@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include "chart.h"
 #include <QDebug>
-#include "Statistics.h"
+#include "statistics.h"
 #include "sqlite.h"
 #include "Calendar.h"
 #include "calendarsubmitwidow.h"
@@ -33,6 +33,12 @@ MainWindow::MainWindow(QWidget *parent) :
     highlightCurrentDay();
 
     profiler.finishMeasuring();
+    QList<int> v1{10,20,30,40};
+    QList<int> v2{10};
+    QList<int> v3{0};
+    qDebug() << standartDeviation(v1, meanStat(v1));
+    qDebug() << standartDeviation(v2, meanStat(v2));
+    qDebug() << standartDeviation(v3, meanStat(v3));
 }
 
 void MainWindow::highlightCurrentDay()

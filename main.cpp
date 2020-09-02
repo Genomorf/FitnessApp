@@ -8,11 +8,17 @@
 #include "darkpalette.h"
 #include <chrono>
 #include <iostream>
+#include "unittests.h"
+
 
 int main(int argc, char *argv[])
 {
+    auto test = unitTests();
+    test.RunTests();
+
     QApplication app(argc, argv);
     MainWindow window;
+
 
     window.profiler.startMeasuring("Style: ");
 
@@ -22,6 +28,8 @@ int main(int argc, char *argv[])
     qApp->setPalette(darkPollete);
 
     window.profiler.finishMeasuring();
+
+
 
 
     window.profiler.startMeasuring("Show: ");
