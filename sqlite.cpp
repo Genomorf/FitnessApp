@@ -13,9 +13,13 @@ void SQLite::connectToSql()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
 
-    QString db_release("fitness.db");
-    QString db_debug("C:\\Users\\Alex\\Documents\\build-fitness_widget-Desktop_Qt_5_15_0_MinGW_32_bit-Debug\\debug\\fitness.db");
-    db.setDatabaseName(db_debug);
+    #ifdef QT_NO_DEBUG
+        QString dbSource("fitness.db");
+    #else
+        QString dbSource("C:\\Users\\Alex\\Documents\\build-fitness_widget-Desktop_Qt_5_15_0_MinGW_32_bit-Debug\\debug\\fitness.db");
+    #endif
+
+    db.setDatabaseName(dbSource);
 
     if(db.open()){
         qDebug() << "DB open";
