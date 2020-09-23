@@ -1,6 +1,6 @@
 # FitnessApp
 
-- This app provides simple information about train plan and your train progress. 
+- This app provides simple information about train plan and train progress. 
 
 - It can track your weight and amount of reps in different exercises.
 
