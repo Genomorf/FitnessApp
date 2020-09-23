@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->calendar_label->setText(calendarMonth.toUpper());
 
     connect(ui->btnQuit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
-    MainWindow::connectToSqlDatabase();
+    connectToSqlDatabase();
 
     frame = createCalendarDialogFrame();
     calendar = Calendar();
