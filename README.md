@@ -12,7 +12,7 @@
 
 ![2](https://raw.githubusercontent.com/Genomorf/FitnessApp/master/screenshots/Fitness_1_2.PNG)
 
-- You can add any information about a training plan in calendar.
+- You can add any information about a training plan in the calendar.
 
 ![4](https://raw.githubusercontent.com/Genomorf/FitnessApp/master/screenshots/Fitness_3.PNG)
 
