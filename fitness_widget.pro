@@ -18,6 +18,7 @@ SOURCES += \
         calendar.cpp \
         chart.cpp \
         darkpalette.cpp \
+        dumbellframe.cpp \
         main.cpp \
         mainwindow.cpp \
         profiler.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     calendar.h \
     chart.h \
     darkpalette.h \
+    dumbellframe.h \
     mainwindow.h \
     profiler.h \
     sqlite.h \
