@@ -31,7 +31,7 @@ public:
     void addToCalc(QLineEdit* line, QTextBrowser* textBrowser, int* calcValue);
     void showChart(QChart* chart, QChartView* chartView);
     void cleanTable(QTextBrowser* textBrowser, int& calcValue);
-
+    QFrame* createDumbellFrame();
     void mouseMoveEvent(QMouseEvent* e);
     void mousePressEvent(QMouseEvent* e);
 
@@ -42,6 +42,7 @@ public:
 
     Profiler profiler;
 
+    QVBoxLayout* dumbellsLayout;
 private slots:
     void getTextFromFrame(QString str);
 

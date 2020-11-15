@@ -11,15 +11,12 @@
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QtCore>
+#include <QMessageBox>
+#include "clickablecross.h"
 
 dumbellFrame::dumbellFrame()
 {
-
-}
-
-QFrame* dumbellFrame::create(){
-
-    QFrame* frame = new QFrame();
+    frame = new QFrame();
     frame->setMaximumWidth(250);
     frame->setMaximumHeight(250);
     frame->setStyleSheet("background-color: rgb(50, 50, 50);");
@@ -32,9 +29,59 @@ QFrame* dumbellFrame::create(){
     qDebug() << reader.imageFormat();
     reader.setAutoTransform(true);
     QImage newImage = reader.read();
-    QLabel* dumbellImage = new QLabel();
+    dumbellImage = new QLabel();
     dumbellImage->setAlignment(Qt::AlignCenter);
     dumbellImage->setPixmap(QPixmap::fromImage(newImage.scaled(150,120)));
+
+    textFont.setPixelSize(15);
+    textFont.setBold(true);
+}
+
+QFrame* dumbellFrame::createDumbellFrameEmpty(){
+    QImageReader reader("cross.png");
+    qDebug() << reader.imageFormat();
+    reader.setAutoTransform(true);
+    QImage newImage = reader.read();
+    crossImage = new clickableCross();
+    crossImage->setAlignment(Qt::AlignCenter);
+    crossImage->setPixmap(QPixmap::fromImage(newImage.scaled(80,80)));
+//    crossImage->setStyleSheet("color:rgba(255, 255, 255, 0);") ;
+//    crossImage->fill
+    connect(crossImage, &clickableCross::clicked, this, &dumbellFrame::imageClicked);
+    QVBoxLayout *la = new QVBoxLayout();
+    la->addWidget(dumbellImage);
+    la->addWidget(crossImage);
+
+    la->setAlignment(Qt::AlignCenter);
+    frame->setLayout(la);
+
+    QVBoxLayout *la2 = new QVBoxLayout();
+    la2->addWidget(frame);
+
+    return frame;
+}
+
+void dumbellFrame::imageClicked(){
+
+}
+QFrame* dumbellFrame::createDumbellFrame(){
+
+//    QFrame* frame = new QFrame();
+//    frame->setMaximumWidth(250);
+//    frame->setMaximumHeight(250);
+//    frame->setStyleSheet("background-color: rgb(50, 50, 50);");
+
+//    QFont textFont;
+//    textFont.setPixelSize(15);
+//    textFont.setBold(true);
+
+//    QImageReader reader("dumbell.png");
+//    qDebug() << reader.imageFormat();
+//    reader.setAutoTransform(true);
+//    QImage newImage = reader.read();
+//    QLabel* dumbellImage = new QLabel();
+//    dumbellImage->setAlignment(Qt::AlignCenter);
+//    dumbellImage->setPixmap(QPixmap::fromImage(newImage.scaled(150,120)));
 
     trainingNameLabel = new QLineEdit();
     trainingNameLabel->setText("Second");
@@ -45,11 +92,13 @@ QFrame* dumbellFrame::create(){
     weightCounterLabel->setText(weight);
     weightCounterLabel->setAlignment(Qt::AlignCenter);
     weightCounterLabel->setMaximumSize(labelSize.first, labelSize.second);
+    connect(weightCounterLabel, &QLineEdit::textChanged, this, &dumbellFrame::changeWeightLabel);
 
     setsCounterLabel = new QLineEdit();
-    setsCounterLabel->setText(0);
+    setsCounterLabel->setText(sets);
     setsCounterLabel->setAlignment(Qt::AlignCenter);
     setsCounterLabel->setMaximumSize(labelSize.first, labelSize.second);
+    connect(setsCounterLabel, &QLineEdit::textChanged, this, &dumbellFrame::changeSetsLabel);
 
     QPushButton* weightIncr = new QPushButton();
     weightIncr->setMaximumSize(counterButtonsSize.first, counterButtonsSize.second);
@@ -64,9 +113,12 @@ QFrame* dumbellFrame::create(){
     QPushButton* setsIncr = new QPushButton();
     setsIncr->setMaximumSize(counterButtonsSize.first, counterButtonsSize.second);
     setsIncr->setText("+");
+    connect(setsIncr, &QPushButton::clicked, this, &dumbellFrame::incrSets);
+
     QPushButton* setsDecr = new QPushButton();
     setsDecr->setMaximumSize(counterButtonsSize.first, counterButtonsSize.second);
     setsDecr->setText("-");
+    connect(setsDecr, &QPushButton::clicked, this, &dumbellFrame::decrSets);
 
     QVBoxLayout* weightButtonsLayout = new QVBoxLayout();
     weightButtonsLayout->setAlignment(Qt::AlignLeft);
@@ -125,24 +177,60 @@ QFrame* dumbellFrame::create(){
     return frame;
 }
 
+QString dumbellFrame::changeNum(QString num, bool incr){
+    int tmp = num.toInt();
+    if (incr)
+        ++tmp;
+    else
+        --tmp;
+    qDebug() << tmp << ' ' << weight << ' ' << sets << '\n';
+    return QString::number(tmp);
+}
+
 void dumbellFrame::incrWeight(){
-    int num = weight.toInt();
-    ++num;
-    weight = QString::number(num);
+    weight = changeNum(weight, true);
     weightCounterLabel->setText(weight);
 }
 
 void dumbellFrame::decrWeight(){
-    int num = weight.toInt();
-    --num;
-    weight = QString::number(num);
+    weight = changeNum(weight, false);
     weightCounterLabel->setText(weight);
 }
 
-void dumbellFrame::changeDesc(QString string){
-    trainingNameLabel->setText(string);
+void dumbellFrame::incrSets(){
+    sets = changeNum(sets, true);
+    setsCounterLabel->setText(sets);
 }
 
-void dumbellFrame::changeWeight(QString string){
-    weightCounterLabel->setText(string);
+void dumbellFrame::decrSets(){
+    sets = changeNum(sets, false);
+    setsCounterLabel->setText(sets);
 }
+
+bool dumbellFrame::checkIfLetter(QString string){
+    QRegExp re("\\d*");
+    if (!re.exactMatch(string)){
+       QMessageBox::warning(nullptr, "Error", "You must type only integer values");
+       qDebug() << "Not integers where added!";
+       return true;
+    }
+    return false;
+}
+
+void dumbellFrame::changeLabel(QString string, QString& counter, QLineEdit* label){
+    if (checkIfLetter(string)){
+            label->setText(counter);
+            return;
+    }
+    counter = string;
+    label->setText(string);
+}
+
+void dumbellFrame::changeSetsLabel(QString string){
+    changeLabel(string, sets, setsCounterLabel);
+}
+
+void dumbellFrame::changeWeightLabel(QString string){
+    changeLabel(string, weight, weightCounterLabel);
+}
+

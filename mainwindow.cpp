@@ -9,7 +9,7 @@
 #include "calendarsubmitwidow.h"
 #include "profiler.h"
 #include "dumbellframe.h"
-
+#include "clickablecross.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent, Qt::Window | Qt::FramelessWindowHint),
@@ -42,45 +42,33 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << standartDeviation(v2, meanStat(v2));
     qDebug() << standartDeviation(v3, meanStat(v3));
 
-    /*
-    QFrame* f = new QFrame();
-    f->setMaximumWidth(150);
-    f->setMaximumHeight(150);
-    f->setStyleSheet("background-color: rgb(50, 50, 50);");
-    QFont textFont;
-    textFont.setPixelSize(15);
-    textFont.setBold(true);
-    QLabel* l1 = new QLabel();
-    l1->setAlignment(Qt::AlignCenter);
 
-  //  l1->setText("First");
-    QLabel* l2 = new QLabel();
-    l2->setText("Second");
-    l2->setAlignment(Qt::AlignCenter);
-    QLabel* l3 = new QLabel();
-    l3->setText("Third");
-    l3->setAlignment(Qt::AlignCenter);
-    QImageReader reader("dumbell.png");
-    qDebug() << reader.imageFormat();
-    reader.setAutoTransform(true);
-    QImage newImage = reader.read();
-    l2->setFont(textFont);
-    l3->setFont(textFont);
-    l1->setPixmap(QPixmap::fromImage(newImage.scaled(130,100)));
 
-    QVBoxLayout *la = new QVBoxLayout();
-    la->addWidget(l1);
-    la->addWidget(l2);
-    la->addWidget(l3);
-    la->setAlignment(Qt::AlignCenter);
-    f->setLayout(la);
-    */
-    dumbellFrame* Df = new dumbellFrame();
-    QFrame* f = Df->create();
-    QVBoxLayout *la2 = new QVBoxLayout();
-    la2->addWidget(f);
-    ui->page_2->setLayout(la2);
+
+
+
+
+
+
+    dumbellFrame* d2 = new dumbellFrame();
+    QFrame* d2f = d2->createDumbellFrameEmpty();
+
+    connect(d2->crossImage, &clickableCross::clicked, this, &MainWindow::createDumbellFrame);
+    dumbellsLayout = new QVBoxLayout();
+    ui->page_2->setLayout(dumbellsLayout);
+    dumbellsLayout->addWidget(d2f);
+
+
     qDebug() << 1;
+}
+
+
+QFrame* MainWindow::createDumbellFrame(){
+    dumbellFrame* Df = new dumbellFrame();
+    QFrame* f = Df->createDumbellFrame();
+    dumbellsLayout->addWidget(f);
+    qDebug() << "Added";
+    return f;
 }
 
 void MainWindow::highlightCurrentDay()

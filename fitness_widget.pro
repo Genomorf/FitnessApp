@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         calendar.cpp \
         chart.cpp \
+        clickablecross.cpp \
         darkpalette.cpp \
         dumbellframe.cpp \
         main.cpp \
@@ -37,6 +38,7 @@ FORMS += \
 HEADERS += \
     calendar.h \
     chart.h \
+    clickablecross.h \
     darkpalette.h \
     dumbellframe.h \
     mainwindow.h \
