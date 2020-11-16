@@ -9,5 +9,5 @@ clickableCross::clickableCross()
 void clickableCross::mousePressEvent(QMouseEvent* event)
 {
     qDebug() << "Clicked!";
-    emit clicked();
+    emit clicked(event);
 }

@@ -47,27 +47,74 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-
+    QPushButton* b_left = new QPushButton();
+    b_left->setMaximumSize(20,20);
+    b_left->setText("<");
+    QPushButton* b_right = new QPushButton();
+    b_right->setMaximumSize(20,20);
+    b_right->setText(">");
+    QLabel* pages = new QLabel();
+    pages->setText("<u><b>1</b1></u> 2 3 4 5");
+    QFont font1;
+//    font1.setBold(true);
+    font1.setPixelSize(15);
+    pages->setFont(font1);
+    QHBoxLayout* dumButtons = new QHBoxLayout();
+//    dumButtons->setAlignment(Qt::AlignCenter);
+    dumButtons->addWidget(b_left);
+    dumButtons->addWidget(pages, 10, Qt::AlignCenter);
+    dumButtons->addWidget(b_right);
 
 
     dumbellFrame* d2 = new dumbellFrame();
     QFrame* d2f = d2->createDumbellFrameEmpty();
 
     connect(d2->crossImage, &clickableCross::clicked, this, &MainWindow::createDumbellFrame);
-    dumbellsLayout = new QVBoxLayout();
-    ui->page_2->setLayout(dumbellsLayout);
-    dumbellsLayout->addWidget(d2f);
+    QVBoxLayout* aaa = new QVBoxLayout();
 
-
+    dumbellsLayout = new QGridLayout();
+    aaa->addLayout(dumbellsLayout);
+    aaa->addLayout(dumButtons);
+    ui->page_2->setLayout(aaa);
+    dumbellsLayout->setAlignment(Qt::AlignTop);
+    dumbellsLayout->addWidget(d2f, dumbellFramesCounterRows, dumbellFramesCounterCols);
+//    for (int i = 0; i < 3; ++i){
+//        for (int j = 0; j < 4; ++j){
+//            QFrame* f = new QFrame();
+//            f->setMinimumSize(100, 100);
+//            dumbellsLayout->addWidget(f, j, i);
+//        }
+//    }
+//    dumbellsLayout->addLayout(dumButtons, 4, 0);
     qDebug() << 1;
 }
 
 
-QFrame* MainWindow::createDumbellFrame(){
+QFrame* MainWindow::createDumbellFrame(QMouseEvent* e){
+    e->ignore();
+    if (dumbellFramesCounterCols == 0 && dumbellFramesCounterRows == 0){
+        g.first = pos().x();
+        g.second = pos().y();
+    }
+   // setGeometry(g.first, g.second, width(), height());
     dumbellFrame* Df = new dumbellFrame();
     QFrame* f = Df->createDumbellFrame();
-    dumbellsLayout->addWidget(f);
-    qDebug() << "Added";
+
+    if (dumbellFramesCounterCols != 3){
+        ++dumbellFramesCounterCols;
+    }
+    else {
+        dumbellFramesCounterCols = 0;
+        ++dumbellFramesCounterRows;
+    }
+    if (dumbellFramesCounterCols == 0 && dumbellFramesCounterRows == 2){
+        ui->page_2->hide();
+        ui->page->show();
+    }
+    qDebug() << "POS: " << pos().x() << " " << pos().y();
+    dumbellsLayout->addWidget(f, dumbellFramesCounterRows, dumbellFramesCounterCols);
+    qDebug() << "Added: " << dumbellsLayout->rowCount() << " " << dumbellsLayout->columnCount();
+    qDebug() << "R: " << dumbellFramesCounterRows << "C: " << dumbellFramesCounterCols << '\n';
     return f;
 }
 

@@ -12,7 +12,7 @@ public:
     clickableCross();
     void mousePressEvent(QMouseEvent* event);
 signals:
-    void clicked();
+    void clicked(QMouseEvent* e);
 };
 
 #endif // CLICKABLECROSS_H

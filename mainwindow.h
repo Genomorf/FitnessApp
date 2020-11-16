@@ -31,7 +31,7 @@ public:
     void addToCalc(QLineEdit* line, QTextBrowser* textBrowser, int* calcValue);
     void showChart(QChart* chart, QChartView* chartView);
     void cleanTable(QTextBrowser* textBrowser, int& calcValue);
-    QFrame* createDumbellFrame();
+    QFrame* createDumbellFrame(QMouseEvent* e);
     void mouseMoveEvent(QMouseEvent* e);
     void mousePressEvent(QMouseEvent* e);
 
@@ -39,10 +39,13 @@ public:
     void highlightCurrentDay();
     void createCalendar(const QString& month);
     QFrame* createCalendarDialogFrame();
-
+    int dumbellFramesCounterRows = 0;
+    int dumbellFramesCounterCols = 0;
     Profiler profiler;
 
-    QVBoxLayout* dumbellsLayout;
+    QGridLayout* dumbellsLayout;
+
+    std::pair<int, int> g;
 private slots:
     void getTextFromFrame(QString str);
 

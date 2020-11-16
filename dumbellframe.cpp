@@ -47,7 +47,7 @@ QFrame* dumbellFrame::createDumbellFrameEmpty(){
     crossImage->setPixmap(QPixmap::fromImage(newImage.scaled(80,80)));
 //    crossImage->setStyleSheet("color:rgba(255, 255, 255, 0);") ;
 //    crossImage->fill
-    connect(crossImage, &clickableCross::clicked, this, &dumbellFrame::imageClicked);
+//    connect(crossImage, &clickableCross::clicked, this, &dumbellFrame::imageClicked);
     QVBoxLayout *la = new QVBoxLayout();
     la->addWidget(dumbellImage);
     la->addWidget(crossImage);
@@ -61,9 +61,7 @@ QFrame* dumbellFrame::createDumbellFrameEmpty(){
     return frame;
 }
 
-void dumbellFrame::imageClicked(){
 
-}
 QFrame* dumbellFrame::createDumbellFrame(){
 
 //    QFrame* frame = new QFrame();
