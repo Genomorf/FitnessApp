@@ -56,11 +56,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QLabel* pages = new QLabel();
     pages->setText("<u><b>1</b1></u> 2 3 4 5");
     QFont font1;
-//    font1.setBold(true);
     font1.setPixelSize(15);
     pages->setFont(font1);
     QHBoxLayout* dumButtons = new QHBoxLayout();
-//    dumButtons->setAlignment(Qt::AlignCenter);
     dumButtons->addWidget(b_left);
     dumButtons->addWidget(pages, 10, Qt::AlignCenter);
     dumButtons->addWidget(b_right);
@@ -78,15 +76,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->page_2->setLayout(aaa);
     dumbellsLayout->setAlignment(Qt::AlignTop);
     dumbellsLayout->addWidget(d2f, dumbellFramesCounterRows, dumbellFramesCounterCols);
-//    for (int i = 0; i < 3; ++i){
-//        for (int j = 0; j < 4; ++j){
-//            QFrame* f = new QFrame();
-//            f->setMinimumSize(100, 100);
-//            dumbellsLayout->addWidget(f, j, i);
-//        }
-//    }
-//    dumbellsLayout->addLayout(dumButtons, 4, 0);
-    qDebug() << 1;
+
+
 }
 
 
